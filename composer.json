@@ -1,0 +1,34 @@
+{
+    "name": "andmemasin/helpers",
+
+    "type": "library",
+
+    "dist": {
+        "url": "https://t6nnp6nn@bitbucket.org/andmemasin/helpers.git",
+        "type": "git"
+    },
+
+    "description": "general php helper classes",
+    "keywords": ["helpers", "andmemasin"],
+    "support": {
+        "issues": "https://andmemasin.eu",
+        "source": "https://bitbucket.org/andmemasin/helpers"
+
+    },
+    "authors": [
+        {
+            "name": "Tõnis Ormisson",
+            "email": "tonis@andmemasin.eu"
+        }
+    ],
+
+    "require": {
+    },
+
+    "autoload": {
+        "psr-4": {
+            "andmemasin\\helpers\\": ""
+        }
+    }
+
+}
