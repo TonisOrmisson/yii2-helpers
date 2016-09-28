@@ -16,8 +16,7 @@ class Replacer {
      * @return string
      */
     public static function replace($text, $params = []) {
-        $defaultParams = ReplacementValue::getParams();
-        $allParams = array_merge($params,$defaultParams);
+        $allParams = $params;
         return preg_replace_callback('/{([^}]+)}/', function ($m) use ($allParams) {
             // skip if is not set
             if(isset($allParams[$m[1]])){
