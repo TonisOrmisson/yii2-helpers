@@ -11,12 +11,17 @@ use \DateTime;
  */
 class DateHelper {
 
-    /** @var End of time for DB logical delete. */
+    /** @var string End of time for DB logical delete. */
     const END_OF_TIME = '3000-12-31 00:00:00.000000';
 
+
+    /**
+     * Get current time in mysql datetime(6) format as "Y-m-d H:i:s.u"
+     * @return string
+     */
     public static function getDatetime6(){
-        // FIXME make this to return DATETIME(6)
-        return date("Y-m-d H:i:s");
+        $now = DateTime::createFromFormat('U.u', microtime(true));
+        return $now->format("Y-m-d H:i:s.u");
     }
     
     /**
@@ -28,7 +33,7 @@ class DateHelper {
         return self::END_OF_TIME;
     }
     
-    public static function getMysqlDateTimeFromDateTime6    ($datetime) {
+    public static function getMysqlDateTimeFromDateTime6 ($datetime) {
         return date("Y-m-d H:i:s", strtotime( $datetime ));
     }
 
