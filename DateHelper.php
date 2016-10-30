@@ -20,7 +20,7 @@ class DateHelper {
      * @return string
      */
     public static function getDatetime6(){
-        $now = DateTime::createFromFormat('U.u', microtime(true));
+        $now = DateTime::createFromFormat('U.u', sprintf("%.6F", microtime(true)));
         return $now->format("Y-m-d H:i:s.u");
     }
     
