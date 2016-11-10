@@ -20,8 +20,12 @@ class DateHelper {
      * @return string
      */
     public static function getDatetime6(){
-        $now = DateTime::createFromFormat('U.u', sprintf("%.6F", microtime(true)));
-        return $now->format("Y-m-d H:i:s.u");
+        $t = microtime(true);
+        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
+        $d = new DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+
+        return $d->format("Y-m-d H:i:s.u"); // note at point on "u"
+
     }
     
     /**
