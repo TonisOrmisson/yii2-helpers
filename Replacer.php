@@ -25,4 +25,14 @@ class Replacer {
             return false;
             }, $text);
     }
+
+    /**
+     * get the items in {} as array
+     * @param $text
+     * @return mixed
+     */
+    public static function getParams($text){
+        preg_match_all('/{(.*?)}/', $text, $matches);
+        return $matches;
+    }
 }
