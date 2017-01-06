@@ -33,6 +33,9 @@ class Replacer {
      */
     public static function getParams($text){
         preg_match_all('/{(.*?)}/', $text, $matches);
-        return $matches;
+        if(is_array($matches)){
+            return $matches[0];
+        }
+
     }
 }
