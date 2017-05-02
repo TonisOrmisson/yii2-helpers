@@ -41,13 +41,12 @@ class Random
     }
 
     /**
-     * get an uuid
+     * get an uuid V4
      * @return string
      */
-    public static function getUuid(){
-        // Generate a version 5 (name-based and hashed with SHA1) UUID object
-        $uuid5 = Uuid::uuid5(Uuid::NAMESPACE_DNS, 'php.net');
-        return $uuid5->toString() . "\n"; // i.e. c4a760a8-dbcf-5254-a0d9-6a4474bd1b62
+    public static function getUuidV4(){
+        $uuid = Uuid::uuid4();
+        return $uuid->toString();
     }
 
 }
