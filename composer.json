@@ -24,13 +24,20 @@
 
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": ">=2.0.10"
+        "yiisoft/yii2": ">=2.0.10",
+        "ramsey/uuid":"^2.9"
     },
 
     "autoload": {
         "psr-4": {
             "andmemasin\\helpers\\": ""
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+
     }
 
 }
