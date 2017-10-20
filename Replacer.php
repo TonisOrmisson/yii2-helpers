@@ -22,8 +22,9 @@ class Replacer {
             if(isset($allParams[$m[1]])){
                 return $allParams[$m[1]];
             }
-            return false;
-            }, $text);
+            \Yii::error('Failed to replace field: '.$m[1] ,__METHOD__);
+            return "{".$m[1]."}";
+        }, $text);
     }
 
     /**
