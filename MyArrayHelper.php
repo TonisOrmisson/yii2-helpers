@@ -97,29 +97,32 @@ class MyArrayHelper extends ArrayHelper{
      * @return array
      */
     public static function indexByColumn($array, $colName){
-        if(is_array($array) && !empty($array)){
-            $newArray= [];
-            foreach ($array as $key => $row) {
-                if($row instanceof ActiveRecord){
-                    $rowArr = (array) $row->attributes;
-                }else if(is_array($row)){
-                    $rowArr = $row;
-                }else{
-                    throw new InvalidParamException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
-                }
-                // make it array if input is object
+        if(is_array($array)){
+            if(!empty($array)){
+                $newArray= [];
+                foreach ($array as $key => $row) {
+                    if($row instanceof ActiveRecord){
+                        $rowArr = (array) $row->attributes;
+                    }else if(is_array($row)){
+                        $rowArr = $row;
+                    }else{
+                        throw new InvalidParamException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
+                    }
+                    // make it array if input is object
 
-                if(!isset($rowArr[$colName])){
-                    throw new InvalidParamException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
+                    if(!isset($rowArr[$colName])){
+                        throw new InvalidParamException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
 
+                    }
+                    $newArray[$rowArr[$colName]] = $row;
                 }
-                $newArray[$rowArr[$colName]] = $row;
+                return $newArray;
             }
-            return $newArray;
+            // do nothing, empty array
+            return $array;
         }else{
             throw new InvalidParamException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
-
     }
     
     /**
