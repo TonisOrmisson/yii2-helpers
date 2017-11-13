@@ -4,8 +4,8 @@
     "type": "library",
 
     "source": {
-        "url": "https://t6nnp6nn@bitbucket.org/andmemasin/helpers.git",
-        "type": "git",
+        "url": "https://git@bitbucket.org/andmemasin/helpers",
+        "type": "vcs",
         "reference": "master"
     },
 
