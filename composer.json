@@ -1,25 +1,20 @@
 {
     "name": "andmemasin/helpers",
-
     "type": "library",
-
-    "source": {
-        "url": "https://git@bitbucket.org/andmemasin/helpers",
-        "type": "vcs",
-        "reference": "master"
-    },
 
     "description": "general php helper classes",
     "keywords": ["helpers", "andmemasin"],
-    "support": {
-        "issues": "https://andmemasin.eu",
-        "source": "https://bitbucket.org/andmemasin/helpers"
-
-    },
     "authors": [
         {
             "name": "Tõnis Ormisson",
             "email": "tonis@andmemasin.eu"
+        }
+    ],
+
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.andmemasin.eu"
         }
     ],
 
