@@ -2,7 +2,7 @@
 namespace andmemasin\helpers;
 
 use yii\base\InvalidParamException;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
