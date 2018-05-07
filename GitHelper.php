@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tonis_o
- * Date: 11.04.18
- * Time: 15:45
- */
 
 namespace andmemasin\helpers;
 

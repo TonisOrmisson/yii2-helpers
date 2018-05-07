@@ -27,7 +27,7 @@ class DateHelper {
         return $d->format("Y-m-d H:i:s.u"); // note at point on "u"
 
     }
-    
+
     /**
      * End of time is a default value for time not in reach to mark
      * date where we will not reach. Typically default for time_closed value
@@ -36,21 +36,42 @@ class DateHelper {
     public static function getEndOfTime(){
         return self::END_OF_TIME;
     }
-    
+
+    /**
+     * @param string $datetime
+     * @return false|string
+     */
     public static function getMysqlDateTimeFromDateTime6 ($datetime) {
         return date("Y-m-d H:i:s", strtotime( $datetime ));
     }
 
-    
+
+    /**
+     * @param string  $dateTime
+     * @return false|string
+     */
     public static function getDatetimeForDisplay($dateTime){
         return date("Y-m-d H:i:s", strtotime( $dateTime ));
     }
 
+    /**
+     * @param string $sqlDate
+     * @return mixed
+     */
     public static function getDateDifferenceInDays($sqlDate){
         $dStart  = new DateTime();
         $dEnd = new DateTime($sqlDate);
         $dDiff = $dStart->diff($dEnd);
         $days = $dDiff->days;
         return $days;
+    }
+
+    /**
+     * @param string $dateTime time that we want to check whether it has reached or not
+     * @return bool
+     */
+    public static function hasTimeReached($dateTime)
+    {
+        return new \DateTime() >= new \DateTime($dateTime);
     }
 }
