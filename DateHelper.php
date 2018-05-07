@@ -20,16 +20,15 @@ class DateHelper {
 
     public function __construct()
     {
-        $now = new DateTime();
+        $this->now = new DateTime();
     }
 
 
     /**
      * Get current time in mysql datetime(6) format as "Y-m-d H:i:s.u"
      * @return string
-     * @deprecated use dynamic
      */
-    public static function getDatetime6(){
+    public function getDatetime6(){
 
         // TODO this does now consider the getNow()
         $t = microtime(true);
@@ -44,18 +43,17 @@ class DateHelper {
      * End of time is a default value for time not in reach to mark
      * date where we will not reach. Typically default for time_closed value
      * @return string
-     * @deprecated use dynamic
      */
-    public static function getEndOfTime(){
+    public function getEndOfTime(){
         return self::END_OF_TIME;
     }
+
 
     /**
      * @param string $datetime
      * @return false|string
-     * @deprecated use dynamic
      */
-    public static function getMysqlDateTimeFromDateTime6 ($datetime) {
+    public function getMysqlDateTimeFromDateTime6 ($datetime) {
         return date("Y-m-d H:i:s", strtotime( $datetime ));
     }
 
@@ -63,19 +61,18 @@ class DateHelper {
     /**
      * @param string  $dateTime
      * @return false|string
-     * @deprecated use dynamic
+     * @deprecated use Formatter
      */
-    public static function getDatetimeForDisplay($dateTime){
+    public function getDatetimeForDisplay($dateTime){
         return date("Y-m-d H:i:s", strtotime( $dateTime ));
     }
 
     /**
      * @param string $sqlDate
      * @return mixed
-     * @deprecated use dynamic
      */
-    public static function getDateDifferenceInDays($sqlDate){
-        $dStart  = self::getNow();
+    public function getDateDifferenceInDays($sqlDate){
+        $dStart  = $this->now;
         $dEnd = new DateTime($sqlDate);
         $dDiff = $dStart->diff($dEnd);
         $days = $dDiff->days;
@@ -89,14 +86,6 @@ class DateHelper {
     public function hasTimeReached($dateTime)
     {
         return $this->now >= new \DateTime($dateTime);
-    }
-
-    /**
-     * @return DateTime
-     * @deprecated use dynamic
-     */
-    public static function getNow() {
-        return new \DateTime();
     }
 
 }
