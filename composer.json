@@ -1,5 +1,5 @@
 {
-    "name": "andmemasin/helpers",
+    "name": "andmemasin/yii2-helpers",
     "type": "library",
 
     "description": "general php helper classes",
