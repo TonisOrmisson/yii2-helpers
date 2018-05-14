@@ -9,4 +9,5 @@ install:
   - travis_retry composer install --no-interaction
 
 script:
+  - composer why GuzzleHttp/guzzle
   - vendor/bin/codecept run
