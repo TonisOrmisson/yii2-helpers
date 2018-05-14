@@ -2,7 +2,7 @@
     "name": "andmemasin/yii2-helpers",
     "type": "library",
 
-    "description": "general php helper classes",
+    "description": "general yii2 helper classes",
     "keywords": ["helpers", "andmemasin"],
     "authors": [
         {
@@ -10,16 +10,8 @@
             "email": "tonis@andmemasin.eu"
         }
     ],
-
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.andmemasin.eu"
-        }
-    ],
-
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.2.0",
         "yiisoft/yii2": ">=2.0.10",
         "ramsey/uuid":"3.6.*"
     },
