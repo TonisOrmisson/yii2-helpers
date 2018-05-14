@@ -12,12 +12,15 @@
       "email": "tonis@andmemasin.eu"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "php": ">=7.2.0",
     "yiisoft/yii2": ">=2.0.14",
     "ramsey/uuid": "3.6.*"
   },
   "require-dev": {
+    "yiisoft/yii2-debug": "~2.0.0",
+    "yiisoft/yii2-gii": "~2.0.0",
     "yiisoft/yii2-faker": "~2.0.0",
 
     "codeception/base": "^2.2.3",
