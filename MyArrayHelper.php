@@ -28,7 +28,7 @@ class MyArrayHelper extends ArrayHelper {
                 $out[$value] = $value;
             }
             return $out;
-        }else {
+        } else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
         
@@ -48,7 +48,7 @@ class MyArrayHelper extends ArrayHelper {
                 $out[$value] = $array[$key];
             }
             return $out;
-        }else {
+        } else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
@@ -82,7 +82,7 @@ class MyArrayHelper extends ArrayHelper {
             }
             
             return $newArray;
-        }else {
+        } else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
@@ -102,9 +102,9 @@ class MyArrayHelper extends ArrayHelper {
                 foreach ($array as $key => $row) {
                     if ($row instanceof ActiveRecord) {
                         $rowArr = (array) $row->attributes;
-                    }else if (is_array($row)) {
+                    } else if (is_array($row)) {
                         $rowArr = $row;
-                    }else {
+                    } else {
                         throw new InvalidArgumentException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
                     }
                     // make it array if input is object
@@ -119,7 +119,7 @@ class MyArrayHelper extends ArrayHelper {
             }
             // do nothing, empty array
             return $array;
-        }else {
+        } else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
     }
@@ -138,7 +138,7 @@ class MyArrayHelper extends ArrayHelper {
                 if ($value === $value[$column]) {
                     unset($array[$key]);
                 }
-            }else {
+            } else {
                 if ($value === $removeValue) {
                     unset($array[$key]);
                 }

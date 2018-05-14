@@ -32,7 +32,7 @@ class Random
             if ($alt == 1) {
                 $password .= $consonants[(rand() % strlen($consonants))];
                 $alt = 0;
-            }else {
+            } else {
                 $password .= $vowels[(rand() % strlen($vowels))];
                 $alt = 1;
             }
