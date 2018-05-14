@@ -1,8 +1,7 @@
 <?php
 namespace andmemasin\helpers;
 
-use yii\base\InvalidParamException;
-use yii\base\BaseObject;
+use yii\base\InvalidArgumentException;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -20,7 +19,7 @@ class MyArrayHelper extends ArrayHelper{
      * as both index and value
      * @param array $array A NON-INDEXES single dimension array
      * @return array
-     * @throws InvalidParamException
+     * @throws InvalidArgumentException
      */
     public static function selfIndex($array) {
         if(is_array($array)){
@@ -30,7 +29,7 @@ class MyArrayHelper extends ArrayHelper{
             }
             return $out;
         }else{
-            throw new InvalidParamException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
         
     }
@@ -50,7 +49,7 @@ class MyArrayHelper extends ArrayHelper{
             }
             return $out;
         }else{
-            throw new InvalidParamException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
 
@@ -84,7 +83,7 @@ class MyArrayHelper extends ArrayHelper{
             
             return $newArray;
         }else{
-            throw new InvalidParamException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
     }
@@ -106,12 +105,12 @@ class MyArrayHelper extends ArrayHelper{
                     }else if(is_array($row)){
                         $rowArr = $row;
                     }else{
-                        throw new InvalidParamException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
+                        throw new InvalidArgumentException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
                     }
                     // make it array if input is object
 
                     if(!isset($rowArr[$colName])){
-                        throw new InvalidParamException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
+                        throw new InvalidArgumentException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
 
                     }
                     $newArray[$rowArr[$colName]] = $row;
@@ -121,7 +120,7 @@ class MyArrayHelper extends ArrayHelper{
             // do nothing, empty array
             return $array;
         }else{
-            throw new InvalidParamException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
     }
     
