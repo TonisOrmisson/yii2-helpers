@@ -1,0 +1,11 @@
+language: php
+dist: trusty
+php:
+    - 7.2
+before_script:
+    # disable xdebug to speed up tests
+    - phpenv config-rm xdebug.ini
+
+script:
+    - composer install
+    - vendor/bin/codecept run
