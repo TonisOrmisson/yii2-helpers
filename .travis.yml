@@ -6,8 +6,8 @@ sudo: false
 php:
   - 7.1
 install:
+  - composer why GuzzleHttp/guzzle
   - travis_retry composer install --no-interaction
 
 script:
-  - composer why GuzzleHttp/guzzle
   - vendor/bin/codecept run
