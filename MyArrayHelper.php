@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
  * @package app\models\helpers
  * @author Tonis Ormisson <tonis@andmemasin.eu>
  */
-class MyArrayHelper extends ArrayHelper{
+class MyArrayHelper extends ArrayHelper {
 
     /**
      * Take a non-indexed array and make an indexed array using the value 
@@ -22,13 +22,13 @@ class MyArrayHelper extends ArrayHelper{
      * @throws InvalidArgumentException
      */
     public static function selfIndex($array) {
-        if(is_array($array)){
+        if (is_array($array)) {
             $out = [];
             foreach ($array as $value) {
                 $out[$value] = $value;
             }
             return $out;
-        }else{
+        }else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
         
@@ -41,14 +41,14 @@ class MyArrayHelper extends ArrayHelper{
      * @param array $array
      * @return array
      */
-    public static function mapIndex($map, $array){
-        if(is_array($array)){
+    public static function mapIndex($map, $array) {
+        if (is_array($array)) {
             $out = [];
-            foreach ($map as $key => $value){
+            foreach ($map as $key => $value) {
                 $out[$value] = $array[$key];
             }
             return $out;
-        }else{
+        }else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
@@ -64,13 +64,13 @@ class MyArrayHelper extends ArrayHelper{
      * @param integer $i
      * @return array
      */
-    public static function indexByRow($array, $i = 0){
+    public static function indexByRow($array, $i = 0) {
         $keys = $array[$i];
-        if(is_array($array) && !empty($array)){
-            $newArray= [];
+        if (is_array($array) && !empty($array)) {
+            $newArray = [];
             foreach ($array as $key=> $row) {
                 // don'd add the indexing element into output
-                if($key != $i){
+                if ($key != $i) {
                     $newRow = [];
                     $j = 0;
                     foreach ($row as $cell) {
@@ -82,7 +82,7 @@ class MyArrayHelper extends ArrayHelper{
             }
             
             return $newArray;
-        }else{
+        }else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
@@ -95,21 +95,21 @@ class MyArrayHelper extends ArrayHelper{
      * @param string $colName
      * @return array
      */
-    public static function indexByColumn($array, $colName){
-        if(is_array($array)){
-            if(!empty($array)){
-                $newArray= [];
+    public static function indexByColumn($array, $colName) {
+        if (is_array($array)) {
+            if (!empty($array)) {
+                $newArray = [];
                 foreach ($array as $key => $row) {
-                    if($row instanceof ActiveRecord){
+                    if ($row instanceof ActiveRecord) {
                         $rowArr = (array) $row->attributes;
-                    }else if(is_array($row)){
+                    }else if (is_array($row)) {
                         $rowArr = $row;
-                    }else{
+                    }else {
                         throw new InvalidArgumentException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
                     }
                     // make it array if input is object
 
-                    if(!isset($rowArr[$colName])){
+                    if (!isset($rowArr[$colName])) {
                         throw new InvalidArgumentException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
 
                     }
@@ -119,7 +119,7 @@ class MyArrayHelper extends ArrayHelper{
             }
             // do nothing, empty array
             return $array;
-        }else{
+        }else {
             throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
     }
@@ -130,16 +130,16 @@ class MyArrayHelper extends ArrayHelper{
      * @param mixed $removeValue value that we look for to delete
      * @return array
      */
-    public static function removeByValue($array,$removeValue,$column = false) {
+    public static function removeByValue($array, $removeValue, $column = false) {
         foreach ($array as $key =>$value) {
             // if column is set then remove by specific column value
-            if($column){
+            if ($column) {
 
-                if($value === $value[$column]){
+                if ($value === $value[$column]) {
                     unset($array[$key]);
                 }
-            }else{
-                if($value === $removeValue){
+            }else {
+                if ($value === $removeValue) {
                     unset($array[$key]);
                 }
             }
@@ -155,10 +155,10 @@ class MyArrayHelper extends ArrayHelper{
      * @param string $value
      * @return ActiveRecord[]
      */
-    public static function removeModelByColumnValue($models, $attribute, $value){
-        if(!empty($models)){
-            foreach ($models as $key => $model){
-                if($model->{$attribute} === $value){
+    public static function removeModelByColumnValue($models, $attribute, $value) {
+        if (!empty($models)) {
+            foreach ($models as $key => $model) {
+                if ($model->{$attribute} === $value) {
                     unset($models[$key]);
                 }
             }
