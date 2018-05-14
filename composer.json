@@ -14,7 +14,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "php": ">=7.2.0",
+    "php": ">=7.1.0",
     "yiisoft/yii2": ">=2.0.14",
     "ramsey/uuid": "3.6.*"
   },

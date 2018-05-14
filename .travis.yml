@@ -4,7 +4,7 @@ language: php
 sudo: false
 
 php:
-  - 7.2
+  - 7.1
 install:
   - travis_retry composer install --no-interaction
 
