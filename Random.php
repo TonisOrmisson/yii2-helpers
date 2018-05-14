@@ -10,7 +10,7 @@ class Random
     const DEFAULT_PASSWORD_LENGTH = 9;
 
 
-    public static function generatePassword($length=9, $strength=0) {
+    public static function generatePassword($length = 9, $strength = 0) {
         $vowels = 'aeuy';
         $consonants = 'bdghjmnpqrstvz';
         if ($strength & 1) {
@@ -32,7 +32,7 @@ class Random
             if ($alt == 1) {
                 $password .= $consonants[(rand() % strlen($consonants))];
                 $alt = 0;
-            } else {
+            }else {
                 $password .= $vowels[(rand() % strlen($vowels))];
                 $alt = 1;
             }
@@ -44,7 +44,7 @@ class Random
      * get an uuid V4
      * @return string
      */
-    public static function getUuidV4(){
+    public static function getUuidV4() {
         $uuid = Uuid::uuid4();
         return $uuid->toString();
     }
