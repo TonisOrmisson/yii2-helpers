@@ -13,7 +13,8 @@
     "require": {
         "php": ">=7.2.0",
         "yiisoft/yii2": ">=2.0.14",
-        "ramsey/uuid":"3.6.*"
+        "ramsey/uuid":"3.6.*",
+        "bower-asset/jquery": "~3.2.0"
     },
 
     "autoload": {
