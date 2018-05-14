@@ -17,12 +17,12 @@ class Replacer {
      */
     public static function replace($text, $params = []) {
         $allParams = $params;
-        return preg_replace_callback('/{([^}]+)}/', function ($m) use ($allParams) {
+        return preg_replace_callback('/{([^}]+)}/', function($m) use ($allParams) {
             // skip if is not set
-            if(isset($allParams[$m[1]])){
+            if (isset($allParams[$m[1]])) {
                 return $allParams[$m[1]];
             }
-            \Yii::error('Failed to replace field: '.$m[1] ,__METHOD__);
+            \Yii::error('Failed to replace field: '.$m[1], __METHOD__);
             return "{".$m[1]."}";
         }, $text);
     }
@@ -32,9 +32,9 @@ class Replacer {
      * @param $text
      * @return mixed
      */
-    public static function getParams($text){
+    public static function getParams($text) {
         preg_match_all('/{(.*?)}/', $text, $matches);
-        if(is_array($matches)){
+        if (is_array($matches)) {
             return $matches[0];
         }
 

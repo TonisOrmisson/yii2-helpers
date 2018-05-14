@@ -13,7 +13,7 @@ class QueryBuilderHelper
     const TYPE_DATETIME = 'datetime';
     const TYPE_BOOLEAN = 'boolean';
 
-    public static function getTypes(){
+    public static function getTypes() {
         return [
             self::TYPE_STRING => 'String',
             self::TYPE_INTEGER => 'Integer',

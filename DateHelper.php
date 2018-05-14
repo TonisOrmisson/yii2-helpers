@@ -28,12 +28,12 @@ class DateHelper {
      * Get current time in mysql datetime(6) format as "Y-m-d H:i:s.u"
      * @return string
      */
-    public function getDatetime6(){
+    public function getDatetime6() {
 
         // TODO this does now consider the getNow()
         $t = microtime(true);
-        $micro = sprintf("%06d",($t - floor($t)) * 1000000);
-        $d = new DateTime( date('Y-m-d H:i:s.'.$micro, $t) );
+        $micro = sprintf("%06d", ($t - floor($t)) * 1000000);
+        $d = new DateTime(date('Y-m-d H:i:s.'.$micro, $t));
 
         return $d->format("Y-m-d H:i:s.u"); // note at point on "u"
 
@@ -44,7 +44,7 @@ class DateHelper {
      * date where we will not reach. Typically default for time_closed value
      * @return string
      */
-    public function getEndOfTime(){
+    public function getEndOfTime() {
         return self::END_OF_TIME;
     }
 
@@ -53,8 +53,8 @@ class DateHelper {
      * @param string $datetime
      * @return false|string
      */
-    public function getMysqlDateTimeFromDateTime6 ($datetime) {
-        return date("Y-m-d H:i:s", strtotime( $datetime ));
+    public function getMysqlDateTimeFromDateTime6($datetime) {
+        return date("Y-m-d H:i:s", strtotime($datetime));
     }
 
 
@@ -63,16 +63,16 @@ class DateHelper {
      * @return false|string
      * @deprecated use Formatter
      */
-    public function getDatetimeForDisplay($dateTime){
-        return date("Y-m-d H:i:s", strtotime( $dateTime ));
+    public function getDatetimeForDisplay($dateTime) {
+        return date("Y-m-d H:i:s", strtotime($dateTime));
     }
 
     /**
      * @param string $sqlDate
      * @return mixed
      */
-    public function getDateDifferenceInDays($sqlDate){
-        $dStart  = $this->now;
+    public function getDateDifferenceInDays($sqlDate) {
+        $dStart = $this->now;
         $dEnd = new DateTime($sqlDate);
         $dDiff = $dStart->diff($dEnd);
         $days = $dDiff->days;
