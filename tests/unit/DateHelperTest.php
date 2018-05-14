@@ -1,6 +1,8 @@
 <?php
 namespace andmemasin\helpers;
 
+use andmemasin\helpers\DateHelper;
+
 class DateHelperTest extends \Codeception\Test\Unit
 {
     /**
