@@ -4,13 +4,9 @@ language: php
 sudo: false
 
 php:
-  - 7.2
-before_script:
-  # disable xdebug to speed up tests
-  - phpenv config-rm xdebug.ini
+  - 7.1
 install:
-  - travis_retry composer self-update && composer --version
-  - travis_retry composer install --prefer-dist --no-interaction
+  - travis_retry composer install --no-interaction
 
 script:
   - vendor/bin/codecept run
