@@ -33,5 +33,5 @@ jobs:
           chmod -R 600 ~/.ssh
           ls -lst ~/.ssh
           composer install --no-interaction
-          vendor/bin/codecept run
+          vendor/bin/codecept run --coverage --coverage-xml
 
