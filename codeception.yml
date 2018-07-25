@@ -9,3 +9,8 @@ actor_suffix: Tester
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+coverage:
+  enabled: true
+  remote: false
+  include:
+      - src/*
