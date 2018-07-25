@@ -40,6 +40,7 @@ class ReplacerTest extends \Codeception\Test\Unit
      * @param string $string
      * @param string $expected
      * @param array $params
+     * @param array $keys
      */
     public function testReplace($string, $params, $expected, $keys)
     {
@@ -51,8 +52,9 @@ class ReplacerTest extends \Codeception\Test\Unit
     /**
      * @dataProvider provideStrings
      * @param string $string
-     * @param string $expected
+     * @param array $expected
      * @param array $params
+     * @param string $out
      */
     public function testGetParams($string, $params, $out, $expected) {
         $result = Replacer::getParams($string);
