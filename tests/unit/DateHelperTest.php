@@ -59,4 +59,10 @@ class DateHelperTest extends \Codeception\Test\Unit
     }
 
 
+    public function testGetDatetime6(){
+        $result = (new DateHelper())->getDatetime6();
+        $this->assertEquals(26, strlen($result));
+    }
+
+
 }
