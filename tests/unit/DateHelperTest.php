@@ -64,5 +64,16 @@ class DateHelperTest extends \Codeception\Test\Unit
         $this->assertEquals(26, strlen($result));
     }
 
+    public function testGetEndOfTime() {
+        $result = (new DateHelper())->getEndOfTime();
+        $this->assertEquals('3000-12-31 00:00:00.000000', $result);
+    }
+
+    public function testGetMysqlDateTimeFromDateTime6() {
+        $result = (new DateHelper())->getMysqlDateTimeFromDateTime6('3000-12-31 00:00:00.000000');
+        $this->assertEquals(19, strlen($result));
+
+    }
+
 
 }
