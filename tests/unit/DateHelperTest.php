@@ -2,6 +2,7 @@
 namespace andmemasin\helpers;
 
 use andmemasin\helpers\DateHelper;
+use Codeception\Stub;
 
 class DateHelperTest extends \Codeception\Test\Unit
 {
@@ -71,8 +72,36 @@ class DateHelperTest extends \Codeception\Test\Unit
 
     public function testGetMysqlDateTimeFromDateTime6() {
         $result = (new DateHelper())->getMysqlDateTimeFromDateTime6('3000-12-31 00:00:00.000000');
-        $this->assertEquals(19, strlen($result));
+        $this->assertEquals("3000-12-31 00:00:00", $result);
 
+    }
+
+    public function testGetDatetimeForDisplay() {
+        $result = (new DateHelper())->getDatetimeForDisplay('3000-12-31 00:00:00.000000');
+        $this->assertEquals("3000-12-31 00:00:00", $result);
+    }
+
+    public function provideFromTo() {
+        return [
+            ["2018-01-01", 364],
+            ["2018-12-01", 30],
+            // with time
+            ["2018-12-01 00:00:00", 30],
+            ["2018-12-30", 1],
+        ];
+    }
+
+    /**
+     * @dataProvider provideFromTo
+     * @param int $date
+     * @param string $to
+     */
+    public function testGetDateDifferenceInDays($date, $expectedDifference)
+    {
+        /** @var DateHelper $model */
+        $model = Stub::make(DateHelper::class, ['now' => new \DateTime("2018-12-31")]);
+        $result = $model->getDateDifferenceInDays($date);
+        $this->assertEquals($expectedDifference, $result);
     }
 
 
