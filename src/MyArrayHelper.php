@@ -1,6 +1,7 @@
 <?php
 namespace andmemasin\helpers;
 
+use yii\base\Component;
 use yii\base\InvalidArgumentException;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -130,30 +131,21 @@ class MyArrayHelper extends ArrayHelper {
      * @param mixed $removeValue value that we look for to delete
      * @return array
      */
-    public static function removeByValue($array, $removeValue, $column = false) {
+    public static function removeByValue($array, $removeValue) {
         foreach ($array as $key =>$value) {
-            // if column is set then remove by specific column value
-            if ($column) {
-
-                if ($value === $value[$column]) {
-                    unset($array[$key]);
-                }
-            } else {
-                if ($value === $removeValue) {
-                    unset($array[$key]);
-                }
+            if ($value === $removeValue) {
+                unset($array[$key]);
             }
-
         }
         return $array;
     }
 
     /**
-     * Remove an ActiveRecord model from array of models by a value in one specified attribute
-     * @param ActiveRecord[] $models
+     * Remove an Object from array of Objects by a value in one specified attribute
+     * @param Component[] $models
      * @param string $attribute
      * @param string $value
-     * @return ActiveRecord[]
+     * @return Component[]
      */
     public static function removeModelByColumnValue($models, $attribute, $value) {
         if (!empty($models)) {
