@@ -92,7 +92,7 @@ class DateHelperTest extends \Codeception\Test\Unit
 
             // future
             ["2019-01-01", 1],
-            ["2019-01-30", 31],
+            ["2019-01-30", 30],
             ["2019-12-31", 365],
 
         ];
