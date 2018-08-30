@@ -1,7 +1,6 @@
 <?php
 namespace andmemasin\helpers;
 
-use andmemasin\helpers\DateHelper;
 use Codeception\Stub;
 
 class DateHelperTest extends \Codeception\Test\Unit
@@ -83,11 +82,19 @@ class DateHelperTest extends \Codeception\Test\Unit
 
     public function provideFromTo() {
         return [
-            ["2018-01-01", 364],
-            ["2018-12-01", 30],
+            // past
+            ["2018-01-01", -364],
+            ["2018-12-01", -30],
             // with time
-            ["2018-12-01 00:00:00", 30],
-            ["2018-12-30", 1],
+            ["2018-12-01 00:00:00", -30],
+
+            ["2018-12-30", -1],
+
+            // future
+            ["2019-01-01", 1],
+            ["2019-01-30", 31],
+            ["2019-12-31", 365],
+
         ];
     }
 

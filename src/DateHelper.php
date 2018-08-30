@@ -75,8 +75,7 @@ class DateHelper {
         $dStart = $this->now;
         $dEnd = new DateTime($sqlDate);
         $dDiff = $dStart->diff($dEnd);
-        $days = $dDiff->days;
-        return $days;
+        return (int) $dDiff->format('%r%a');
     }
 
     /**
