@@ -2,4 +2,5 @@
 !.gitignore
 !.travis.yml
 composer.lock
+/vendor
 
