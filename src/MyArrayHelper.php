@@ -3,6 +3,7 @@ namespace andmemasin\helpers;
 
 use yii\base\Component;
 use yii\base\InvalidArgumentException;
+use yii\base\Model;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -101,12 +102,13 @@ class MyArrayHelper extends ArrayHelper {
             if (!empty($array)) {
                 $newArray = [];
                 foreach ($array as $key => $row) {
-                    if ($row instanceof ActiveRecord) {
+                    if ($row instanceof Component) {
+                        /** @var Model $row */
                         $rowArr = (array) $row->attributes;
                     } else if (is_array($row)) {
                         $rowArr = $row;
                     } else {
-                        throw new InvalidArgumentException('Only arrays or ActiveRecord Objects can be used in '.__CLASS__.'::'.__FUNCTION__);
+                        throw new InvalidArgumentException('Only arrays or yii Component objects can be used in '.__CLASS__.'::'.__FUNCTION__);
                     }
                     // make it array if input is object
 
