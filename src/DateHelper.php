@@ -20,7 +20,8 @@ class DateHelper {
 
     public function __construct()
     {
-        $this->now = new DateTime();
+        $timeZone = new \DateTimeZone(\Yii::$app->timeZone);
+        $this->now = new DateTime('now', $timeZone);
     }
 
 
