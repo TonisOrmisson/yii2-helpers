@@ -16,7 +16,7 @@
   "require": {
     "php": ">=7.1.0",
     "yiisoft/yii2": ">=2.0.14",
-    "ramsey/uuid": "3.6.*"
+    "ramsey/uuid": "^3 | ^4"
   },
   "require-dev": {
     "codeception/base": "^2.2.3",
