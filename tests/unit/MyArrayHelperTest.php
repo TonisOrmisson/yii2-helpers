@@ -1,7 +1,7 @@
 <?php
 namespace andmemasin\helpers;
 
-use yii\base\Exception;
+use yii\base\ErrorException;
 use yii\base\InvalidArgumentException;
 
 class MyArrayHelperTest extends \Codeception\Test\Unit
@@ -81,7 +81,13 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
     }
 
     public function testIndexByColumnFailsWithInvalidColumn() {
-        $this->expectException(Exception::class);
+
+        if (PHP_VERSION_ID < 70400) {
+            $this->expectException(InvalidArgumentException::class);
+        } else {
+            $this->expectException(ErrorException::class);
+        }
+
         $input = [
             ['foo' => 1, 'bar' => 2, 'hello' => 3, 'world' => 4],
             ['foo' => 2, 'bar' => 4, 'hello' => 6, 'world' => 8],
