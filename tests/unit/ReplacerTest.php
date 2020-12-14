@@ -13,10 +13,10 @@ class ReplacerTest extends \Codeception\Test\Unit
     /** @var ViewTag */
     private $model;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->model = new Replacer();
-        return parent::setUp();
+        parent::setUp();
     }
 
     public function provideStrings() {
