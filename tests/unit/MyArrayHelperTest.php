@@ -80,7 +80,10 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
+    public function testPhpVerison() {
 
+        $this->assertGreaterThanOrEqual(70400,PHP_VERSION_ID);
+    }
 
     public function testIndexByColumnFailsWithInvalidColumn() {
 
