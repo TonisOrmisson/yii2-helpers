@@ -1,8 +1,6 @@
 <?php
 namespace andmemasin\helpers;
 
-use Codeception\Stub;
-use Da\QrCode\Exception\InvalidConfigException;
 use yii\base\InvalidArgumentException;
 
 class MyArrayHelperTest extends \Codeception\Test\Unit
@@ -20,7 +18,7 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
     }
 
     public function testSelfIndexFails() {
-        $this->expectException(InvalidConfigException::class);
+        $this->expectException(InvalidArgumentException::class);
         MyArrayHelper::selfIndex(null);
     }
 
