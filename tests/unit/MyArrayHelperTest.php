@@ -2,6 +2,8 @@
 namespace andmemasin\helpers;
 
 use Codeception\Stub;
+use Da\QrCode\Exception\InvalidConfigException;
+use yii\base\InvalidArgumentException;
 
 class MyArrayHelperTest extends \Codeception\Test\Unit
 {
@@ -17,10 +19,8 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @expectedException yii\base\InvalidArgumentException
-     */
     public function testSelfIndexFails() {
+        $this->expectException(InvalidConfigException::class);
         MyArrayHelper::selfIndex(null);
     }
 
@@ -33,10 +33,8 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @expectedException yii\base\InvalidArgumentException
-     */
     public function testMapIndexFails() {
+        $this->expectException(InvalidArgumentException::class);
         MyArrayHelper::mapIndex(null, null);
     }
 
@@ -56,10 +54,8 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @expectedException yii\base\InvalidArgumentException
-     */
     public function testIndexByRowFails() {
+        $this->expectException(InvalidArgumentException::class);
         MyArrayHelper::indexByRow(null, null);
     }
 
@@ -85,10 +81,8 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @expectedException yii\base\InvalidArgumentException
-     */
     public function testIndexByColumnFailsWithInvalidColumn() {
+        $this->expectException(InvalidArgumentException::class);
         $input = [
             ['foo' => 1, 'bar' => 2, 'hello' => 3, 'world' => 4],
             ['foo' => 2, 'bar' => 4, 'hello' => 6, 'world' => 8],
@@ -97,10 +91,8 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $result = MyArrayHelper::indexByColumn($input, 'no-such-thing');
     }
 
-    /**
-     * @expectedException yii\base\InvalidArgumentException
-     */
     public function testIndexByColumnFails() {
+        $this->expectException(InvalidArgumentException::class);
         MyArrayHelper::indexByColumn(null, null);
     }
 
