@@ -11,7 +11,7 @@ class QueryBuilderHelperTest extends \Codeception\Test\Unit
 
     public function testGetTypes() {
         $result = QueryBuilderHelper::getTypes();
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
 
