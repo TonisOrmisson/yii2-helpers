@@ -54,8 +54,13 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
     }
 
     public function testIndexByRowFails() {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\TypeError::class);
         MyArrayHelper::indexByRow(null, null);
+
+        $this->expectException(\TypeError::class);
+        MyArrayHelper::indexByRow(null);
+        $this->expectException(InvalidArgumentException::class);
+        MyArrayHelper::indexByRow([]);
     }
 
     public function testIndexByColumn() {
@@ -80,25 +85,17 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    public function testPhpVerison() {
-
-        $this->assertEquals(70400,PHP_VERSION_ID);
-    }
 
     public function testIndexByColumnFailsWithInvalidColumn() {
 
-        if (intval(PHP_VERSION_ID) >= 70400) {
-            $this->expectException(ErrorException::class);
-        } else {
-            $this->expectException(InvalidArgumentException::class);
-        }
+        $this->expectException(InvalidArgumentException::class);
 
         $input = [
             ['foo' => 1, 'bar' => 2, 'hello' => 3, 'world' => 4],
             ['foo' => 2, 'bar' => 4, 'hello' => 6, 'world' => 8],
         ];
 
-        $result = MyArrayHelper::indexByColumn($input, 'no-such-thing');
+        MyArrayHelper::indexByColumn($input, 'no-such-thing');
     }
 
     public function testIndexByColumnFails() {

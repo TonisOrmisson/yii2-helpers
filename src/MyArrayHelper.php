@@ -66,27 +66,28 @@ class MyArrayHelper extends ArrayHelper {
      * @param integer $i
      * @return array
      */
-    public static function indexByRow($array, $i = 0) {
-        $keys = $array[$i];
-        if (is_array($array) && !empty($array)) {
-            $newArray = [];
-            foreach ($array as $key=> $row) {
-                // don'd add the indexing element into output
-                if ($key != $i) {
-                    $newRow = [];
-                    $j = 0;
-                    foreach ($row as $cell) {
-                        $newRow[$keys[$j]] = $cell;
-                        $j++;
-                    }
-                    $newArray[] = $newRow;
-                }
-            }
-            
-            return $newArray;
-        } else {
-            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+    public static function indexByRow(array $array, ?int $i = 0) {
+        if (empty($array)) {
+            throw new InvalidArgumentException('Empty array  used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
+
+
+        $keys = $array[$i];
+        $newArray = [];
+        foreach ($array as $key=> $row) {
+            // don'd add the indexing element into output
+            if ($key != $i) {
+                $newRow = [];
+                $j = 0;
+                foreach ($row as $cell) {
+                    $newRow[$keys[$j]] = $cell;
+                    $j++;
+                }
+                $newArray[] = $newRow;
+            }
+        }
+
+        return $newArray;
 
     }
 
