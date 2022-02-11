@@ -15,7 +15,7 @@ class RandomTest extends \Codeception\Test\Unit
     }
 
     public function testGeneratePasswordContainsUpperCase() {
-        $result = Random::generatePassword(9, 1);
+        $result = Random::generatePassword(99, 1);
         $this->assertTrue(preg_match('/[A-Z]/', $result) > 0);
     }
 
