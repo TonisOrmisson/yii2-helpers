@@ -31,13 +31,8 @@ class DateHelper {
      */
     public function getDatetime6() {
 
-        // TODO this does now consider the getNow()
-        $t = microtime(true);
-        $micro = sprintf("%06d", ($t - floor($t)) * 1000000);
-        $d = new DateTime(date('Y-m-d H:i:s.'.$micro, $t));
-
+        $d = new DateTime();
         return $d->format("Y-m-d H:i:s.u"); // note at point on "u"
-
     }
 
     /**
