@@ -30,10 +30,10 @@ class Random
         $alt = time() % 2;
         for ($i = 0; $i < $length; $i++) {
             if ($alt == 1) {
-                $password .= $consonants[(rand() % strlen($consonants))];
+                $password .= $consonants[(random_int(0,strlen($consonants)) % strlen($consonants))];
                 $alt = 0;
             } else {
-                $password .= $vowels[(rand() % strlen($vowels))];
+                $password .= $vowels[(random_int(0, strlen($vowels)) % strlen($vowels))];
                 $alt = 1;
             }
         }
