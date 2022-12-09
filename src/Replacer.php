@@ -12,7 +12,7 @@ class Replacer {
     /**
      * Replace the {values} by $params[] values in $text
      * @param string $text
-     * @param array[] $params
+     * @param array $params
      * @return string
      */
     public static function replace($text, $params = []) {
