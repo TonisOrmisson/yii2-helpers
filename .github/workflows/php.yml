@@ -18,9 +18,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configure Github Token
+        run: composer config -g github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install dependencies
         run: composer install
-
 
       - name: Run tests on PHP container
         run: XDEBUG_MODE=coverage php vendor/bin/codecept run --coverage --coverage-xml
