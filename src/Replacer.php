@@ -19,7 +19,7 @@ class Replacer {
         $allParams = $params;
         return preg_replace_callback('/{([^}]+)}/', function($m) use ($allParams) {
             // skip if is not set
-            if (isset($allParams[$m[1]])) {
+            if (in_array( $m[1],array_keys($allParams))) {
                 return $allParams[$m[1]];
             }
             \Yii::error('Failed to replace field: '.$m[1], __METHOD__);
