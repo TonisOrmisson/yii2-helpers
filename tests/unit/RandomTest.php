@@ -14,6 +14,11 @@ class RandomTest extends \Codeception\Test\Unit
         $this->assertEquals(9, strlen($result));
     }
 
+    public function testGeneratePasswordZeroLength() {
+        $result = Random::generatePassword(0);
+        $this->assertEquals('', $result);
+    }
+
     public function testGeneratePasswordContainsUpperCase() {
         $result = Random::generatePassword(99, 1);
         $this->assertTrue(preg_match('/[A-Z]/', $result) > 0);

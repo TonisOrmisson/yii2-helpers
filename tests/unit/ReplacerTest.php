@@ -2,6 +2,7 @@
 namespace andmemasin\helpers;
 
 use Codeception\Stub;
+use yii\base\InvalidArgumentException;
 
 class ReplacerTest extends \Codeception\Test\Unit
 {
@@ -29,6 +30,7 @@ class ReplacerTest extends \Codeception\Test\Unit
                 "the quick brown fox jumps over the lazy dog",
                 ['{color}', '{animal}', '{who}']
             ],
+            ["hello {world}", null, "hello {world}", ['{world}']],
             ["hello {world}", [], "hello {world}", ['{world}']],
             ["hello world", ['{hello}'], "hello world", []],
             [null, null, null, []],
@@ -60,6 +62,16 @@ class ReplacerTest extends \Codeception\Test\Unit
         $result = Replacer::getParams($string);
         $this->assertEquals($expected, $result);
 
+    }
+
+    public function testReplaceFailsOnInvalidTextType() {
+        $this->expectException(InvalidArgumentException::class);
+        Replacer::replace(['x'], []);
+    }
+
+    public function testReplaceFailsOnInvalidParamsType() {
+        $this->expectException(InvalidArgumentException::class);
+        Replacer::replace('x{a}', 'not-array');
     }
 
 

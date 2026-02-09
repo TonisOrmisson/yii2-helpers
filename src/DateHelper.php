@@ -2,6 +2,8 @@
 namespace andmemasin\helpers;
 
 use \DateTime;
+use Yii;
+use yii\base\InvalidArgumentException;
 
 /**
  * A helper class to contain general datetime helper functions
@@ -20,7 +22,11 @@ class DateHelper {
 
     public function __construct()
     {
-        $timeZone = new \DateTimeZone(\Yii::$app->timeZone);
+        if (!isset(Yii::$app) || !is_string(Yii::$app->timeZone) || Yii::$app->timeZone === '') {
+            throw new \RuntimeException('Application timezone must be configured for ' . __CLASS__);
+        }
+
+        $timeZone = new \DateTimeZone(Yii::$app->timeZone);
         $this->now = new DateTime('now', $timeZone);
     }
 
@@ -50,7 +56,16 @@ class DateHelper {
      * @return false|string
      */
     public function getMysqlDateTimeFromDateTime6($datetime) {
-        return date("Y-m-d H:i:s", strtotime($datetime));
+        if (!is_string($datetime) || $datetime === '') {
+            throw new InvalidArgumentException('Datetime must be non-empty string in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        $timestamp = strtotime($datetime);
+        if ($timestamp === false) {
+            throw new InvalidArgumentException('Invalid datetime value "' . $datetime . '" in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        return date("Y-m-d H:i:s", $timestamp);
     }
 
 
@@ -60,7 +75,16 @@ class DateHelper {
      * @deprecated use Formatter
      */
     public function getDatetimeForDisplay($dateTime) {
-        return date("Y-m-d H:i:s", strtotime($dateTime));
+        if (!is_string($dateTime) || $dateTime === '') {
+            throw new InvalidArgumentException('Datetime must be non-empty string in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        $timestamp = strtotime($dateTime);
+        if ($timestamp === false) {
+            throw new InvalidArgumentException('Invalid datetime value "' . $dateTime . '" in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        return date("Y-m-d H:i:s", $timestamp);
     }
 
     /**
@@ -68,6 +92,10 @@ class DateHelper {
      * @return mixed
      */
     public function getDateDifferenceInDays($sqlDate) {
+        if (!is_string($sqlDate) || $sqlDate === '') {
+            throw new InvalidArgumentException('Datetime must be non-empty string in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
         $dStart = $this->now;
         $dEnd = new DateTime($sqlDate);
         $dDiff = $dStart->diff($dEnd);
@@ -80,6 +108,9 @@ class DateHelper {
      */
     public function hasTimeReached($dateTime)
     {
+        if (!is_string($dateTime) || $dateTime === '') {
+            throw new InvalidArgumentException('Datetime must be non-empty string in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
         return $this->now >= new \DateTime($dateTime);
     }
 

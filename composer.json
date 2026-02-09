@@ -15,7 +15,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": ">=7.4.0",
+    "php": ">=8.2.1",
     "yiisoft/yii2": "~2.0.14",
     "ramsey/uuid": "^3 | ^4"
   },
@@ -31,7 +31,7 @@
 
   "config": {
     "platform": {
-      "php": "7.4.0"
+      "php": "8.2.1"
     },
     "process-timeout": 1800,
     "fxp-asset": {
@@ -48,7 +48,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.5.x-dev"
+      "dev-master": "1.6.x-dev"
     }
   },
   "repositories": [

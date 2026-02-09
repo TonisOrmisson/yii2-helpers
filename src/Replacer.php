@@ -2,6 +2,8 @@
 
 namespace andmemasin\helpers;
 
+use yii\base\InvalidArgumentException;
+
 /**
  * Replacement values helper
  *
@@ -16,15 +18,36 @@ class Replacer {
      * @return string
      */
     public static function replace($text, $params = []) {
-        $allParams = $params;
-        return preg_replace_callback('/{([^}]+)}/', function($m) use ($allParams) {
+        if ($text === null) {
+            return null;
+        }
+
+        if (!is_string($text)) {
+            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        if ($params === null) {
+            $params = [];
+        }
+
+        if (!is_array($params)) {
+            throw new InvalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params) {
             // skip if is not set
-            if (in_array( $m[1],array_keys($allParams))) {
-                return $allParams[$m[1]];
+            if (array_key_exists($m[1], $params)) {
+                return (string) $params[$m[1]];
             }
             \Yii::error('Failed to replace field: '.$m[1], __METHOD__);
             return "{".$m[1]."}";
         }, $text);
+
+        if ($result === null) {
+            throw new \RuntimeException('Failed to perform replacements in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
+
+        return $result;
     }
 
     /**
@@ -33,6 +56,12 @@ class Replacer {
      * @return mixed
      */
     public static function getParams($text) {
+        if ($text === null || $text === '') {
+            return [];
+        }
+        if (!is_string($text)) {
+            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+        }
         preg_match_all('/{(.*?)}/', $text, $matches);
         return $matches[0];
 

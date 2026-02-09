@@ -2,6 +2,7 @@
 namespace andmemasin\helpers;
 
 use Codeception\Stub;
+use yii\base\InvalidArgumentException;
 
 class DateHelperTest extends \Codeception\Test\Unit
 {
@@ -78,6 +79,21 @@ class DateHelperTest extends \Codeception\Test\Unit
     public function testGetDatetimeForDisplay() {
         $result = (new DateHelper())->getDatetimeForDisplay('3000-12-31 00:00:00.000000');
         $this->assertEquals("3000-12-31 00:00:00", $result);
+    }
+
+    public function testGetMysqlDateTimeFromDateTime6FailsOnNull() {
+        $this->expectException(InvalidArgumentException::class);
+        (new DateHelper())->getMysqlDateTimeFromDateTime6(null);
+    }
+
+    public function testGetDatetimeForDisplayFailsOnNull() {
+        $this->expectException(InvalidArgumentException::class);
+        (new DateHelper())->getDatetimeForDisplay(null);
+    }
+
+    public function testGetDateDifferenceInDaysFailsOnNull() {
+        $this->expectException(InvalidArgumentException::class);
+        (new DateHelper())->getDateDifferenceInDays(null);
     }
 
     public function provideFromTo() {

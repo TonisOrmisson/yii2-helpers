@@ -37,6 +37,11 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         MyArrayHelper::mapIndex(null, null);
     }
 
+    public function testMapIndexFailsWithMissingSourceKey() {
+        $this->expectException(InvalidArgumentException::class);
+        MyArrayHelper::mapIndex(['missing' => 'target'], ['present' => 'value']);
+    }
+
 
     public function testIndexByRow() {
         $input = [
@@ -53,14 +58,27 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $this->assertEquals($expected, $result);
     }
 
-    public function testIndexByRowFails() {
+    public function testIndexByRowFailsForNullArray() {
         $this->expectException(\TypeError::class);
         MyArrayHelper::indexByRow(null, null);
+    }
 
-        $this->expectException(\TypeError::class);
-        MyArrayHelper::indexByRow(null);
+    public function testIndexByRowFailsForEmptyArray() {
         $this->expectException(InvalidArgumentException::class);
         MyArrayHelper::indexByRow([]);
+    }
+
+    public function testIndexByRowFailsForMissingIndexingRow() {
+        $this->expectException(InvalidArgumentException::class);
+        MyArrayHelper::indexByRow([['h1'], ['v1']], 99);
+    }
+
+    public function testIndexByRowFailsForRowLongerThanHeader() {
+        $this->expectException(InvalidArgumentException::class);
+        MyArrayHelper::indexByRow([
+            ['h1'],
+            ['v1', 'v2'],
+        ]);
     }
 
     public function testIndexByColumn() {
@@ -115,6 +133,11 @@ class MyArrayHelperTest extends \Codeception\Test\Unit
         $result = MyArrayHelper::removeByValue($input, 3);
         $expected = ['foo' => 1, 'bar' => 2,  'world' => 4];
         $this->assertEquals($expected, $result);
+    }
+
+    public function testRemoveByValueFailsForInvalidArray() {
+        $this->expectException(InvalidArgumentException::class);
+        MyArrayHelper::removeByValue(null, 1);
     }
 
     public function testRemoveModelByColumnValue()

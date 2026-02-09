@@ -27,6 +27,9 @@ class MyArrayHelper extends ArrayHelper {
         if (is_array($array)) {
             $out = [];
             foreach ($array as $value) {
+                if (!is_int($value) && !is_string($value)) {
+                    throw new InvalidArgumentException('Array values must be string or int in '.__CLASS__.'::'.__FUNCTION__);
+                }
                 $out[$value] = $value;
             }
             return $out;
@@ -44,14 +47,20 @@ class MyArrayHelper extends ArrayHelper {
      * @return array
      */
     public static function mapIndex($map, $array) {
-        if (is_array($array)) {
+        if (is_array($map) && is_array($array)) {
             $out = [];
             foreach ($map as $key => $value) {
+                if (!array_key_exists($key, $array)) {
+                    throw new InvalidArgumentException('"'.$key.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
+                }
+                if (!is_int($value) && !is_string($value)) {
+                    throw new InvalidArgumentException('Map values must be string or int in '.__CLASS__.'::'.__FUNCTION__);
+                }
                 $out[$value] = $array[$key];
             }
             return $out;
         } else {
-            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+            throw new InvalidArgumentException(gettype($map).' and '.gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
 
@@ -71,15 +80,35 @@ class MyArrayHelper extends ArrayHelper {
             throw new InvalidArgumentException('Empty array  used as array in '.__CLASS__.'::'.__FUNCTION__);
         }
 
+        if ($i === null) {
+            throw new InvalidArgumentException('Row index cannot be null in '.__CLASS__.'::'.__FUNCTION__);
+        }
+
+        if (!array_key_exists($i, $array)) {
+            throw new InvalidArgumentException('Missing indexing row "'.$i.'" in '.__CLASS__.'::'.__FUNCTION__);
+        }
 
         $keys = $array[$i];
+        if (!is_array($keys)) {
+            throw new InvalidArgumentException('Indexing row must be array in '.__CLASS__.'::'.__FUNCTION__);
+        }
+
         $newArray = [];
         foreach ($array as $key=> $row) {
             // don'd add the indexing element into output
             if ($key != $i) {
+                if (!is_array($row)) {
+                    throw new InvalidArgumentException('Rows must be arrays in '.__CLASS__.'::'.__FUNCTION__);
+                }
                 $newRow = [];
                 $j = 0;
                 foreach ($row as $cell) {
+                    if (!array_key_exists($j, $keys)) {
+                        throw new InvalidArgumentException('Missing index "'.$j.'" in indexing row in '.__CLASS__.'::'.__FUNCTION__);
+                    }
+                    if (!is_int($keys[$j]) && !is_string($keys[$j])) {
+                        throw new InvalidArgumentException('Indexing row values must be string or int in '.__CLASS__.'::'.__FUNCTION__);
+                    }
                     $newRow[$keys[$j]] = $cell;
                     $j++;
                 }
@@ -100,6 +129,9 @@ class MyArrayHelper extends ArrayHelper {
      */
     public static function indexByColumn($array, $colName) {
         if (is_array($array)) {
+            if (!is_string($colName) && !is_int($colName)) {
+                throw new InvalidArgumentException('Column name must be string or int in '.__CLASS__.'::'.__FUNCTION__);
+            }
             if (!empty($array)) {
                 $newArray = [];
                 foreach ($array as $key => $row) {
@@ -116,6 +148,9 @@ class MyArrayHelper extends ArrayHelper {
                     if (!isset($rowArr[$colName])) {
                         throw new InvalidArgumentException('"'.$colName.'" missing as key in '.__CLASS__.'::'.__FUNCTION__);
 
+                    }
+                    if (!is_int($rowArr[$colName]) && !is_string($rowArr[$colName])) {
+                        throw new InvalidArgumentException('"'.$colName.'" value must be string or int in '.__CLASS__.'::'.__FUNCTION__);
                     }
                     $newArray[$rowArr[$colName]] = $row;
                 }
@@ -135,6 +170,9 @@ class MyArrayHelper extends ArrayHelper {
      * @return array
      */
     public static function removeByValue($array, $removeValue) {
+        if (!is_array($array)) {
+            throw new InvalidArgumentException(gettype($array).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+        }
         foreach ($array as $key =>$value) {
             if ($value === $removeValue) {
                 unset($array[$key]);
@@ -151,6 +189,10 @@ class MyArrayHelper extends ArrayHelper {
      * @return Component[]
      */
     public static function removeModelByColumnValue($models, $attribute, $value) {
+        if (!is_array($models)) {
+            throw new InvalidArgumentException(gettype($models).' used as array in '.__CLASS__.'::'.__FUNCTION__);
+        }
+
         if (!empty($models)) {
             foreach ($models as $key => $model) {
                 if ($model->{$attribute} === $value) {

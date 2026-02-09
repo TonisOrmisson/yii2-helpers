@@ -12,7 +12,7 @@ use yii\helpers\Html;
 class ViewTag
 {
     /** @var string $name */
-    private $name;
+    private string $name;
     const PREFIX = "action";
     const DELIMITER = "::";
 
@@ -35,7 +35,7 @@ class ViewTag
 
     public function __toString()
     {
-        return Html::tag("x-test", null, ['id' => $this->getId()]);
+        return Html::tag("x-test", '', ['id' => $this->getId()]);
     }
 
 
