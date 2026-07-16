@@ -25,7 +25,14 @@ jobs:
         run: composer install
 
       - name: Run tests on PHP container
-        run: XDEBUG_MODE=coverage php vendor/bin/codecept run --coverage --coverage-xml
+        env:
+          XDEBUG_MODE: coverage
+        run: tests/_mutation/coverage.sh
+
+      - name: Run mutation tests
+        env:
+          XDEBUG_MODE: coverage
+        run: tests/_mutation/run.sh
 
       - name: Upload Code coverage
         uses: codecov/codecov-action@v5.5.2

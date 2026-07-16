@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/infection/infection/0.32.3/resources/schema.json",
+    "source": {
+        "directories": ["src"]
+    },
+    "timeout": 600,
+    "threads": 1,
+    "tmpDir": "tests/_output/infection",
+    "testFramework": "codeception",
+    "testFrameworkOptions": "-c codeception.yml unit",
+    "phpUnit": {
+        "configDir": "."
+    },
+    "minCoveredMsi": 49,
+    "maxTimeouts": 0,
+    "logs": {
+        "text": "tests/_output/infection.log",
+        "summary": "tests/_output/infection-summary.txt"
+    },
+    "mutators": {
+        "@default": true
+    }
+}
