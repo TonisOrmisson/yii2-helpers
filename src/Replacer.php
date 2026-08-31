@@ -15,7 +15,7 @@ use Psr\Log\NullLogger;
 class Replacer {
     private static ?LoggerInterface $logger = null;
 
-    public static function setLogger(LoggerInterface $logger): void
+    public static function setLogger(?LoggerInterface $logger): void
     {
         self::$logger = $logger;
     }
@@ -32,7 +32,7 @@ class Replacer {
         }
 
         if (!is_string($text)) {
-            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
 
         if ($params === null) {
@@ -40,7 +40,7 @@ class Replacer {
         }
 
         if (!is_array($params)) {
-            throw new InvalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
 
         $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params) {
@@ -48,7 +48,7 @@ class Replacer {
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
-            (self::$logger ??= new NullLogger())->warning(
+            self::logger()->warning(
                 'Failed to replace field: ' . $m[1],
                 ['field' => $m[1]],
             );
@@ -62,6 +62,22 @@ class Replacer {
         return $result;
     }
 
+    private static function logger(): LoggerInterface
+    {
+        return self::$logger ??= class_exists(\Yii::class)
+            ? new YiiLogger()
+            : new NullLogger();
+    }
+
+    private static function invalidArgumentException(string $message): \Throwable
+    {
+        if (class_exists(\yii\base\InvalidArgumentException::class)) {
+            return new \yii\base\InvalidArgumentException($message);
+        }
+
+        return new InvalidArgumentException($message);
+    }
+
     /**
      * get the items in {} as array
      * @param $text
@@ -72,7 +88,7 @@ class Replacer {
             return [];
         }
         if (!is_string($text)) {
-            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
         preg_match_all('/{(.*?)}/', $text, $matches);
         return $matches[0];
