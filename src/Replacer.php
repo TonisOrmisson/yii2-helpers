@@ -2,7 +2,9 @@
 
 namespace andmemasin\helpers;
 
-use yii\base\InvalidArgumentException;
+use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Replacement values helper
@@ -11,6 +13,13 @@ use yii\base\InvalidArgumentException;
  * @author Tonis Ormisson <tonis@andmemasin.eu>
  */
 class Replacer {
+    private static ?LoggerInterface $logger = null;
+
+    public static function setLogger(?LoggerInterface $logger): void
+    {
+        self::$logger = $logger;
+    }
+
     /**
      * Replace the {values} by $params[] values in $text
      * @param string $text
@@ -23,7 +32,7 @@ class Replacer {
         }
 
         if (!is_string($text)) {
-            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
 
         if ($params === null) {
@@ -31,15 +40,19 @@ class Replacer {
         }
 
         if (!is_array($params)) {
-            throw new InvalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
 
-        $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params) {
+        $category = __METHOD__;
+        $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params, $category) {
             // skip if is not set
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
-            \Yii::error('Failed to replace field: '.$m[1], __METHOD__);
+            self::logger()->error(
+                'Failed to replace field: ' . $m[1],
+                ['field' => $m[1], 'category' => $category],
+            );
             return "{".$m[1]."}";
         }, $text);
 
@@ -48,6 +61,22 @@ class Replacer {
         }
 
         return $result;
+    }
+
+    private static function logger(): LoggerInterface
+    {
+        return self::$logger ??= class_exists(\Yii::class)
+            ? new YiiLogger()
+            : new NullLogger();
+    }
+
+    private static function invalidArgumentException(string $message): \Throwable
+    {
+        if (class_exists(\Yii::class, false)) {
+            return new \yii\base\InvalidArgumentException($message);
+        }
+
+        return new InvalidArgumentException($message);
     }
 
     /**
@@ -60,7 +89,7 @@ class Replacer {
             return [];
         }
         if (!is_string($text)) {
-            throw new InvalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
+            throw self::invalidArgumentException('Text must be string or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
         preg_match_all('/{(.*?)}/', $text, $matches);
         return $matches[0];
