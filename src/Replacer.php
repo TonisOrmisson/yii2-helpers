@@ -39,6 +39,7 @@ class Replacer {
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
+            error_log('Failed to replace field: ' . $m[1]);
             return "{".$m[1]."}";
         }, $text);
 
