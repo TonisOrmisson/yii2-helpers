@@ -77,12 +77,12 @@ class ReplacerTest extends \Codeception\Test\Unit
     public function testHelpersWorkWithoutYii() {
         $script = 'require $argv[1]; require $argv[2]; echo \\andmemasin\\helpers\\Replacer::replace("hello {name} {missing}", ["name" => "world"]); echo "|"; echo json_encode(\\andmemasin\\helpers\\QueryBuilderHelper::getTypes());';
         $command = sprintf(
-            '%s -n -r %s %s %s 2>&1',
+            '%s -n -r %s %s %s',
             escapeshellarg(PHP_BINARY),
             escapeshellarg($script),
             escapeshellarg(__DIR__ . '/../../src/Replacer.php'),
             escapeshellarg(__DIR__ . '/../../src/QueryBuilderHelper.php')
-        );
+        ) . ' 2>/dev/null';
         exec($command, $output, $exitCode);
 
         $this->assertSame(0, $exitCode, implode(PHP_EOL, $output));
