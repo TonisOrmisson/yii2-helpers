@@ -3,6 +3,8 @@ namespace andmemasin\helpers;
 
 use Codeception\Stub;
 use InvalidArgumentException;
+use Psr\Log\AbstractLogger;
+use Psr\Log\NullLogger;
 
 class ReplacerTest extends \Codeception\Test\Unit
 {
@@ -72,6 +74,34 @@ class ReplacerTest extends \Codeception\Test\Unit
     public function testReplaceFailsOnInvalidParamsType() {
         $this->expectException(InvalidArgumentException::class);
         Replacer::replace('x{a}', 'not-array');
+    }
+
+    public function testMissingPlaceholderUsesConfiguredPsrLogger(): void
+    {
+        $logger = new class extends AbstractLogger {
+            /** @var list<array{level: string, message: string, context: array}> */
+            public array $records = [];
+
+            public function log($level, string|\Stringable $message, array $context = []): void
+            {
+                $this->records[] = [
+                    'level' => (string) $level,
+                    'message' => (string) $message,
+                    'context' => $context,
+                ];
+            }
+        };
+        Replacer::setLogger($logger);
+
+        try {
+            $this->assertSame('hello {missing}', Replacer::replace('hello {missing}', []));
+        } finally {
+            Replacer::setLogger(new NullLogger());
+        }
+
+        $this->assertSame([
+            ['level' => 'warning', 'message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
+        ], $logger->records);
     }
 
     public function testHelpersWorkWithoutYii() {
