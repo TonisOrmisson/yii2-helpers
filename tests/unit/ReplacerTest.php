@@ -2,9 +2,8 @@
 namespace andmemasin\helpers;
 
 use Codeception\Stub;
-use InvalidArgumentException;
-use Psr\Log\AbstractLogger;
-use Psr\Log\NullLogger;
+use Psr\Log\LoggerInterface;
+use yii\base\InvalidArgumentException;
 
 class ReplacerTest extends \Codeception\Test\Unit
 {
@@ -78,30 +77,35 @@ class ReplacerTest extends \Codeception\Test\Unit
 
     public function testMissingPlaceholderUsesConfiguredPsrLogger(): void
     {
-        $logger = new class extends AbstractLogger {
-            /** @var list<array{level: string, message: string, context: array}> */
-            public array $records = [];
-
-            public function log($level, string|\Stringable $message, array $context = []): void
-            {
-                $this->records[] = [
-                    'level' => (string) $level,
+        $records = [];
+        $logger = Stub::makeEmpty(LoggerInterface::class, [
+            'warning' => static function ($message, $context = []) use (&$records): void {
+                $records[] = [
                     'message' => (string) $message,
                     'context' => $context,
                 ];
-            }
-        };
+            },
+        ]);
         Replacer::setLogger($logger);
 
         try {
             $this->assertSame('hello {missing}', Replacer::replace('hello {missing}', []));
         } finally {
-            Replacer::setLogger(new NullLogger());
+            Replacer::setLogger(null);
         }
 
         $this->assertSame([
-            ['level' => 'warning', 'message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
-        ], $logger->records);
+            ['message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
+        ], $records);
+    }
+
+    public function testMissingPlaceholderUsesYiiLoggerByDefault(): void
+    {
+        Replacer::setLogger(null);
+        $this->assertSame('hello {missing}', Replacer::replace('hello {missing}', []));
+
+        $property = new \ReflectionProperty(Replacer::class, 'logger');
+        $this->assertInstanceOf(YiiLogger::class, $property->getValue());
     }
 
     public function testHelpersWorkWithoutYii() {
