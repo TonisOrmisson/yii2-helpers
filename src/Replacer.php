@@ -48,7 +48,7 @@ class Replacer {
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
-            self::logger()->warning(
+            self::logger()->error(
                 'Failed to replace field: ' . $m[1],
                 ['field' => $m[1]],
             );
@@ -71,7 +71,7 @@ class Replacer {
 
     private static function invalidArgumentException(string $message): \Throwable
     {
-        if (class_exists(\yii\base\InvalidArgumentException::class)) {
+        if (class_exists(\Yii::class, false)) {
             return new \yii\base\InvalidArgumentException($message);
         }
 
