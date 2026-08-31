@@ -2,7 +2,7 @@
 
 namespace andmemasin\helpers;
 
-use yii\base\InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Replacement values helper
@@ -39,7 +39,6 @@ class Replacer {
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
-            \Yii::error('Failed to replace field: '.$m[1], __METHOD__);
             return "{".$m[1]."}";
         }, $text);
 
