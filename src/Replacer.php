@@ -3,6 +3,8 @@
 namespace andmemasin\helpers;
 
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 /**
  * Replacement values helper
@@ -11,6 +13,13 @@ use InvalidArgumentException;
  * @author Tonis Ormisson <tonis@andmemasin.eu>
  */
 class Replacer {
+    private static ?LoggerInterface $logger = null;
+
+    public static function setLogger(LoggerInterface $logger): void
+    {
+        self::$logger = $logger;
+    }
+
     /**
      * Replace the {values} by $params[] values in $text
      * @param string $text
@@ -39,7 +48,10 @@ class Replacer {
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
-            error_log('Failed to replace field: ' . $m[1]);
+            (self::$logger ??= new NullLogger())->warning(
+                'Failed to replace field: ' . $m[1],
+                ['field' => $m[1]],
+            );
             return "{".$m[1]."}";
         }, $text);
 
