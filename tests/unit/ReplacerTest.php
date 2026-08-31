@@ -96,7 +96,7 @@ class ReplacerTest extends \Codeception\Test\Unit
         }
 
         $this->assertSame([
-            ['level' => 'error', 'message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
+            ['level' => 'error', 'message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing', 'category' => Replacer::class . '::replace']],
         ], $records);
     }
 

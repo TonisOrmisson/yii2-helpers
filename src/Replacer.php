@@ -43,14 +43,15 @@ class Replacer {
             throw self::invalidArgumentException('Params must be array or null in ' . __CLASS__ . '::' . __FUNCTION__);
         }
 
-        $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params) {
+        $category = __METHOD__;
+        $result = preg_replace_callback('/{([^}]+)}/', function ($m) use ($params, $category) {
             // skip if is not set
             if (array_key_exists($m[1], $params)) {
                 return (string) $params[$m[1]];
             }
             self::logger()->error(
                 'Failed to replace field: ' . $m[1],
-                ['field' => $m[1]],
+                ['field' => $m[1], 'category' => $category],
             );
             return "{".$m[1]."}";
         }, $text);

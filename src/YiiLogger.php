@@ -19,6 +19,7 @@ final class YiiLogger extends AbstractLogger
             default => \yii\log\Logger::LEVEL_INFO,
         };
 
-        \Yii::getLogger()->log((string) $message, $yiiLevel, __CLASS__);
+        $category = is_string($context['category'] ?? null) ? $context['category'] : __CLASS__;
+        \Yii::getLogger()->log((string) $message, $yiiLevel, $category);
     }
 }
