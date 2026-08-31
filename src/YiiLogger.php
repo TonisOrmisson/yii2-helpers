@@ -15,8 +15,10 @@ final class YiiLogger extends AbstractLogger
             LogLevel::CRITICAL,
             LogLevel::ERROR => \yii\log\Logger::LEVEL_ERROR,
             LogLevel::WARNING => \yii\log\Logger::LEVEL_WARNING,
+            LogLevel::NOTICE,
+            LogLevel::INFO => \yii\log\Logger::LEVEL_INFO,
             LogLevel::DEBUG => \yii\log\Logger::LEVEL_TRACE,
-            default => \yii\log\Logger::LEVEL_INFO,
+            default => throw new \Psr\Log\InvalidArgumentException('Unknown log level: ' . (string) $level),
         };
 
         $category = is_string($context['category'] ?? null) ? $context['category'] : __CLASS__;

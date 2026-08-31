@@ -109,6 +109,12 @@ class ReplacerTest extends \Codeception\Test\Unit
         $this->assertInstanceOf(YiiLogger::class, $property->getValue());
     }
 
+    public function testYiiLoggerRejectsUnknownLevel(): void
+    {
+        $this->expectException(\Psr\Log\InvalidArgumentException::class);
+        (new YiiLogger())->log('invalid', 'message');
+    }
+
     public function testHelpersWorkWithoutYii() {
         $script = 'require $argv[1]; require $argv[2]; require $argv[3]; echo \\andmemasin\\helpers\\Replacer::replace("hello {name} {missing}", ["name" => "world"]); try { \\andmemasin\\helpers\\Replacer::replace([], []); } catch (\\Throwable $e) { echo "|" . get_class($e); } echo "|"; echo json_encode(\\andmemasin\\helpers\\QueryBuilderHelper::getTypes());';
         $command = sprintf(
