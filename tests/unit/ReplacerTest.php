@@ -79,8 +79,9 @@ class ReplacerTest extends \Codeception\Test\Unit
     {
         $records = [];
         $logger = Stub::makeEmpty(LoggerInterface::class, [
-            'warning' => static function ($message, $context = []) use (&$records): void {
+            'error' => static function ($message, $context = []) use (&$records): void {
                 $records[] = [
+                    'level' => 'error',
                     'message' => (string) $message,
                     'context' => $context,
                 ];
@@ -95,7 +96,7 @@ class ReplacerTest extends \Codeception\Test\Unit
         }
 
         $this->assertSame([
-            ['message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
+            ['level' => 'error', 'message' => 'Failed to replace field: missing', 'context' => ['field' => 'missing']],
         ], $records);
     }
 
@@ -109,7 +110,7 @@ class ReplacerTest extends \Codeception\Test\Unit
     }
 
     public function testHelpersWorkWithoutYii() {
-        $script = 'require $argv[1]; require $argv[2]; require $argv[3]; echo \\andmemasin\\helpers\\Replacer::replace("hello {name} {missing}", ["name" => "world"]); echo "|"; echo json_encode(\\andmemasin\\helpers\\QueryBuilderHelper::getTypes());';
+        $script = 'require $argv[1]; require $argv[2]; require $argv[3]; echo \\andmemasin\\helpers\\Replacer::replace("hello {name} {missing}", ["name" => "world"]); try { \\andmemasin\\helpers\\Replacer::replace([], []); } catch (\\Throwable $e) { echo "|" . get_class($e); } echo "|"; echo json_encode(\\andmemasin\\helpers\\QueryBuilderHelper::getTypes());';
         $command = sprintf(
             '%s -n -r %s %s %s %s',
             escapeshellarg(PHP_BINARY),
@@ -122,7 +123,7 @@ class ReplacerTest extends \Codeception\Test\Unit
 
         $this->assertSame(0, $exitCode, implode(PHP_EOL, $output));
         $this->assertSame(
-            'hello world {missing}|{"string":"String","integer":"Integer","double":"Double","date":"Date","datetime":"datetime","boolean":"boolean"}',
+            'hello world {missing}|InvalidArgumentException|{"string":"String","integer":"Integer","double":"Double","date":"Date","datetime":"datetime","boolean":"boolean"}',
             implode(PHP_EOL, $output)
         );
     }
